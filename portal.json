@@ -1,0 +1,16 @@
+{
+  "portal": "https://aisland.uk/",
+  "name": "AISLAND Portal",
+  "entries": [
+    {
+      "name": "Protocol Layer",
+      "href": "https://aipoints.org/",
+      "role": "protocol"
+    },
+    {
+      "name": "Cultural Layer",
+      "href": "https://goldisle.org/",
+      "role": "culture"
+    }
+  ]
+}

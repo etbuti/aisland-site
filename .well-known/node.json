@@ -1,0 +1,6 @@
+{
+  "id": "https://aisland.uk/",
+  "type": "gateway-node",
+  "name": "AISLAND",
+  "root": "https://evanbei.com/"
+}

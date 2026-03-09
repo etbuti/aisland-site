@@ -1,14 +1,397 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>aisland.uk — Portal</title>
-<style>body{font-family:Arial,sans-serif;text-align:center;padding-top:80px;}a{font-size:24px;text-decoration:none;color:#000;}</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AISLAND</title>
+
+  <meta name="description" content="AISLAND gateway node connecting protocol and cultural layers." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#f7f7f5" />
+
+  <link rel="canonical" href="https://aisland.uk/" />
+  <link rel="alternate" type="application/json" href="https://aisland.uk/node.json" title="AISLAND node" />
+  <link rel="alternate" type="application/json" href="https://aisland.uk/portal.json" title="AISLAND portal" />
+
+  <style>
+    :root{
+      --bg:#f7f7f5;
+      --fg:#111111;
+      --muted:#6d6d69;
+      --line:rgba(0,0,0,.10);
+      --line-strong:rgba(0,0,0,.16);
+      --card:rgba(255,255,255,.72);
+      --shadow:0 12px 40px rgba(0,0,0,.045);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    body{
+      min-height:100vh;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(255,255,255,.96), rgba(255,255,255,0) 38%),
+        radial-gradient(circle at 50% 48%, rgba(0,0,0,.015), transparent 58%);
+      pointer-events:none;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:920px;
+      min-height:100vh;
+      margin:0 auto;
+      padding:44px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .panel{
+      width:100%;
+      max-width:780px;
+      border:1px solid rgba(0,0,0,.07);
+      border-radius:28px;
+      background:linear-gradient(to bottom, rgba(255,255,255,.78), rgba(255,255,255,.58));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      padding:38px 24px 26px;
+      text-align:center;
+    }
+
+    .eyebrow{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(42px,8vw,78px);
+      font-weight:500;
+      letter-spacing:.14em;
+    }
+
+    .sub{
+      max-width:580px;
+      margin:18px auto 0;
+      font-size:15px;
+      line-height:1.9;
+      color:var(--muted);
+    }
+
+    .network{
+      margin:34px auto 18px;
+      width:100%;
+      max-width:520px;
+      height:120px;
+      position:relative;
+    }
+
+    .core{
+      position:absolute;
+      left:50%;
+      top:8px;
+      transform:translateX(-50%);
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#111;
+      animation:pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse{
+      0%   { box-shadow:0 0 0 rgba(0,0,0,.08); }
+      50%  { box-shadow:0 0 18px rgba(0,0,0,.18); }
+      100% { box-shadow:0 0 0 rgba(0,0,0,.08); }
+    }
+
+    .branch{
+      position:absolute;
+      top:14px;
+      height:1px;
+      background:var(--line);
+      width:145px;
+    }
+
+    .branch.left{
+      left:calc(50% - 145px);
+      transform-origin:right center;
+      transform:rotate(24deg);
+    }
+
+    .branch.right{
+      right:calc(50% - 145px);
+      transform-origin:left center;
+      transform:rotate(-24deg);
+    }
+
+    .leaf{
+      position:absolute;
+      top:72px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#222;
+    }
+
+    .leaf.left{ left:calc(50% - 145px); }
+    .leaf.right{ right:calc(50% - 145px); }
+
+    .mini-label{
+      position:absolute;
+      top:86px;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .mini-label.left{
+      left:calc(50% - 190px);
+      width:110px;
+      text-align:right;
+    }
+
+    .mini-label.right{
+      right:calc(50% - 190px);
+      width:110px;
+      text-align:left;
+    }
+
+    .divider{
+      width:72px;
+      height:1px;
+      background:rgba(0,0,0,.12);
+      margin:8px auto 0;
+    }
+
+    .grid{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:18px;
+    }
+
+    .card{
+      text-align:left;
+      padding:24px 22px 20px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:var(--card);
+      box-shadow:0 8px 24px rgba(0,0,0,.025);
+      transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-3px);
+      border-color:var(--line-strong);
+      box-shadow:0 14px 34px rgba(0,0,0,.055);
+      background:rgba(255,255,255,.84);
+    }
+
+    .kicker{
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .title{
+      margin:0 0 10px;
+      font-size:24px;
+      font-weight:500;
+      letter-spacing:.01em;
+    }
+
+    .desc{
+      margin:0 0 18px;
+      font-size:14px;
+      line-height:1.8;
+      color:var(--muted);
+      min-height:76px;
+    }
+
+    .link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:var(--fg);
+      font-size:14px;
+      padding:10px 14px;
+      border:1px solid rgba(0,0,0,.11);
+      border-radius:999px;
+      transition:border-color .18s ease, background .18s ease, transform .18s ease;
+    }
+
+    .link:hover{
+      border-color:rgba(0,0,0,.2);
+      background:rgba(255,255,255,.75);
+      transform:translateX(1px);
+    }
+
+    .machine{
+      margin-top:18px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .machine a,
+    .foot a{
+      color:inherit;
+      text-decoration:none;
+      border-bottom:1px solid rgba(0,0,0,.12);
+    }
+
+    .foot{
+      margin-top:24px;
+      padding-top:18px;
+      border-top:1px solid rgba(0,0,0,.08);
+      font-size:12px;
+      line-height:1.8;
+      color:var(--muted);
+    }
+
+    @media (max-width:640px){
+      .panel{
+        padding:34px 16px 24px;
+        border-radius:22px;
+      }
+      .desc{ min-height:auto; }
+      .network{
+        max-width:300px;
+        height:108px;
+      }
+      .branch{ width:92px; }
+      .branch.left{ left:calc(50% - 92px); }
+      .branch.right{ right:calc(50% - 92px); }
+      .leaf.left{ left:calc(50% - 92px); top:62px; }
+      .leaf.right{ right:calc(50% - 92px); top:62px; }
+      .mini-label{
+        top:76px;
+        font-size:10px;
+      }
+      .mini-label.left{
+        left:calc(50% - 128px);
+        width:70px;
+      }
+      .mini-label.right{
+        right:calc(50% - 128px);
+        width:70px;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      var MACHINE_TARGET = "https://aipoints.org/";
+      var params = new URLSearchParams(location.search);
+
+      if (params.get("human") === "1") return;
+
+      var ua = (navigator.userAgent || "").toLowerCase();
+
+      var botPatterns = [
+        "bot", "crawler", "spider", "slurp", "curl", "wget",
+        "facebookexternalhit", "twitterbot", "linkedinbot",
+        "googlebot", "bingbot", "duckduckbot", "yandexbot",
+        "applebot", "gptbot", "chatgpt-user", "claudebot",
+        "anthropic-ai", "ccbot", "perplexitybot", "bytespider",
+        "amazonbot", "mj12bot", "semanticbot", "imagesiftbot",
+        "petalbot", "ahrefsbot", "semrushbot"
+      ];
+
+      var isBot = botPatterns.some(function (p) {
+        return ua.indexOf(p) !== -1;
+      });
+
+      if (isBot) {
+        location.replace(MACHINE_TARGET);
+      }
+    })();
+  </script>
 </head>
 <body>
-  <h1>Welcome to aisland.uk</h1>
-  <p>Research & Creative Work by Evan Bei</p>
-  <a href="https://goldisle.org/index.html">Enter Work & Projects</a>
- 
+  <main class="wrap">
+    <section class="panel">
+      <div class="eyebrow">Gateway Node</div>
+
+      <h1>AISLAND</h1>
+
+      <p class="sub">
+        A gateway between protocol and culture,
+        structure and expression,
+        machine-readable order and human works.
+      </p>
+
+      <div class="network" aria-hidden="true">
+        <div class="core"></div>
+        <div class="branch left"></div>
+        <div class="branch right"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <div class="mini-label left">protocol</div>
+        <div class="mini-label right">culture</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <section class="grid" aria-label="AISLAND destinations">
+        <article class="card">
+          <div class="kicker">Protocol Layer</div>
+          <h2 class="title">aipoints.org</h2>
+          <p class="desc">
+            AI Origins related protocol content, structural pathways,
+            and machine-readable materials for the growing network layer.
+          </p>
+          <a class="link" href="https://aipoints.org/">Enter protocol →</a>
+        </article>
+
+        <article class="card">
+          <div class="kicker">Cultural Layer</div>
+          <h2 class="title">goldisle.org</h2>
+          <p class="desc">
+            Works, research, music, writing, and human-facing content
+            anchored to the wider publishing and identity structure.
+          </p>
+          <a class="link" href="https://goldisle.org/">Enter culture →</a>
+        </article>
+      </section>
+
+      <div class="machine">
+        Machine-readable route currently points to
+        <a href="https://aipoints.org/">aipoints.org</a>.
+      </div>
+
+      <div class="foot">
+        AISLAND · an entry structure connected to
+        <a href="https://evanbei.com/">evanbei.com</a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

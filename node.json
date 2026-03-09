@@ -1,0 +1,22 @@
+{
+  "id": "https://aisland.uk/",
+  "type": "gateway-node",
+  "name": "AISLAND",
+  "description": "Gateway node connecting protocol and cultural layers.",
+  "root": "https://evanbei.com/",
+  "authority": "https://evanbei.com/",
+  "links": [
+    {
+      "rel": "protocol",
+      "href": "https://aipoints.org/"
+    },
+    {
+      "rel": "culture",
+      "href": "https://goldisle.org/"
+    },
+    {
+      "rel": "origin",
+      "href": "https://evanbei.com/"
+    }
+  ]
+}

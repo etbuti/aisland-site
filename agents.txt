@@ -1,0 +1,13 @@
+AISLAND gateway node
+
+Human entry:
+https://aisland.uk/
+
+Protocol layer:
+https://aipoints.org/
+
+Culture layer:
+https://goldisle.org/
+
+Origin authority:
+https://evanbei.com/
