@@ -1,16 +1,26 @@
 {
   "portal": "https://aisland.uk/",
   "name": "AISLAND Portal",
+  "type": "gateway-portal",
+  "root": "https://evanbei.com/",
   "entries": [
     {
       "name": "Protocol Layer",
       "href": "https://aipoints.org/",
-      "role": "protocol"
+      "role": "protocol",
+      "description": "AI Origins protocol content and machine-readable pathways."
     },
     {
       "name": "Cultural Layer",
       "href": "https://goldisle.org/",
-      "role": "culture"
+      "role": "culture",
+      "description": "Works, writing, music, research, and human-facing content."
+    },
+    {
+      "name": "Origin Root",
+      "href": "https://evanbei.com/",
+      "role": "origin",
+      "description": "Identity root and origin authority."
     }
   ]
 }
